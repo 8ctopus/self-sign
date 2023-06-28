@@ -24,8 +24,9 @@ class CommandCertificate extends Command
         $this
             ->setName('generate')
             ->setDescription('Generate self-signed SSL certificate')
-            ->addArgument('dir', InputArgument::REQUIRED)
-            ->addArgument('domains', InputArgument::REQUIRED);
+            ->addArgument('directory', InputArgument::REQUIRED, 'Directory to save certificate')
+            ->addArgument('domains', InputArgument::REQUIRED, 'Comma separated list of domains')
+            ->addArgument('authority', InputArgument::REQUIRED, 'Certificate authority directory');
     }
 
     /**
@@ -41,10 +42,19 @@ class CommandCertificate extends Command
         // beautify input, output interface
         $io = new SymfonyStyle($input, $output);
 
-        $dir = $input->getArgument('dir');
+        $dir = $input->getArgument('directory');
         $domains = explode(',', $input->getArgument('domains'));
+        $authority = $input->getArgument('authority');
 
         $io->info("generate self-signed SSL certificate for {$domains[0]}...");
+
+        if (!str_ends_with($dir, DIRECTORY_SEPARATOR)) {
+            $dir .= DIRECTORY_SEPARATOR;
+        }
+
+        if (!str_ends_with($authority, DIRECTORY_SEPARATOR)) {
+            $authority .= DIRECTORY_SEPARATOR;
+        }
 
         if (!file_exists($dir) && !mkdir($dir)) {
             throw new Exception('mkdir');
@@ -60,7 +70,7 @@ class CommandCertificate extends Command
 
         $io->info('generate domain private key');
 
-        $command = "{$exe} genrsa -out {$dir}/private.key 2048";
+        $command = "{$exe} genrsa -out {$dir}private.key 2048";
 
         $io->writeln($command, OutputInterface::VERBOSITY_VERBOSE);
 
@@ -76,14 +86,14 @@ class CommandCertificate extends Command
 
         if (Helper::isWindows()) {
             $command = <<<COMMAND
-            {$exe} req -new -key {$dir}\private.key -out {$dir}\request.csr -subj "{$subject}"
+            {$exe} req -new -key {$dir}private.key -out {$dir}request.csr -subj "{$subject}"
             COMMAND;
         } else {
             $command = <<<COMMAND
             {$exe} req \
             -new \
-            -key {$dir}/private.key \
-            -out {$dir}/request.csr \
+            -key {$dir}private.key \
+            -out {$dir}request.csr \
             -subj "{$subject}"
             COMMAND;
         }
@@ -115,7 +125,7 @@ class CommandCertificate extends Command
             $config .= "DNS.{$i} = {$domain}\n";
         }
 
-        file_put_contents("{$dir}/config.ext", $config);
+        file_put_contents("{$dir}config.ext", $config);
 
         $io->writeln($config, OutputInterface::VERBOSITY_VERBOSE);
 
@@ -123,20 +133,20 @@ class CommandCertificate extends Command
 
         if (Helper::isWindows()) {
             $command = <<<COMMAND
-            {$exe} x509 -req -in {$dir}\request.csr -CA {$dir}\certificate_authority.pem -CAkey {$dir}\certificate_authority.key -CAcreateserial -out {$dir}\certificate.pem -days 825 -sha256 -extfile {$dir}\config.ext
+            {$exe} x509 -req -in {$dir}request.csr -CA {$authority}certificate_authority.pem -CAkey {$authority}certificate_authority.key -CAcreateserial -out {$dir}certificate.pem -days 825 -sha256 -extfile {$dir}config.ext
             COMMAND;
         } else {
             $command = <<<COMMAND
             {$exe} x509 \
             -req \
-            -in {$dir}/request.csr \
-            -CA /sites/config/ssl/certificate_authority.pem \
-            -CAkey /sites/config/ssl/certificate_authority.key \
+            -in {$dir}request.csr \
+            -CA {$authority}certificate_authority.pem \
+            -CAkey {$authority}certificate_authority.key \
             -CAcreateserial \
-            -out {$dir}/certificate.pem \
+            -out {$dir}certificate.pem \
             -days 825 \
             -sha256 \
-            -extfile {$dir}/config.ext
+            -extfile {$dir}config.ext
             COMMAND;
         }
 
@@ -145,7 +155,7 @@ class CommandCertificate extends Command
         Helper::runCommand($command, $stdout, $stderr);
         Helper::log($io, $stdout, $stderr);
 
-        $io->info("Generate self-signed SSL certificate for {$domains[0]} - OK");
+        $io->info('success!');
 
         return 0;
     }

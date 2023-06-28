@@ -24,8 +24,8 @@ class CommandAuthority extends Command
         $this
             ->setName('authority')
             ->setDescription('Generate certificate authority')
-            ->addArgument('dir', InputArgument::REQUIRED)
-            ->addArgument('subject', InputArgument::REQUIRED);
+            ->addArgument('directory', InputArgument::REQUIRED, 'Directory to save certificate authority')
+            ->addArgument('subject', InputArgument::REQUIRED, 'Certificate authority subject');
     }
 
     /**
@@ -41,11 +41,15 @@ class CommandAuthority extends Command
         // beautify input, output interface
         $io = new SymfonyStyle($input, $output);
 
-        $dir = $input->getArgument('dir');
+        $dir = $input->getArgument('directory');
         $subject = $input->getArgument('subject');
 
         if (!file_exists($dir) && !mkdir($dir)) {
             throw new Exception('mkdir');
+        }
+
+        if (!str_ends_with($dir, DIRECTORY_SEPARATOR)) {
+            $dir .= DIRECTORY_SEPARATOR;
         }
 
         $io->writeln('check for openssl', OutputInterface::VERBOSITY_VERBOSE);
@@ -58,7 +62,7 @@ class CommandAuthority extends Command
 
         $io->info("generate certificate authority private key...");
 
-        $command = "{$exe} genrsa -out {$dir}/certificate_authority.key 2048";
+        $command = "{$exe} genrsa -out {$dir}certificate_authority.key 2048";
 
         $io->writeln($command, OutputInterface::VERBOSITY_VERBOSE);
 
@@ -68,17 +72,19 @@ class CommandAuthority extends Command
         Helper::runCommand($command, $stdout, $stderr);
         Helper::log($io, $stdout, $stderr);
 
-        $io->info('generate certificate authority certificate');
+        $io->info('generate certificate authority certificate...');
 
         // to view certificate - openssl x509 -in certificate_authority.pem -noout -text
         $command = <<<COMMAND
-        {$exe} req -new -x509 -nodes -key {$dir}/certificate_authority.key -sha256 -days 825 -out {$dir}/certificate_authority.pem -subj "{$subject}"
+        {$exe} req -new -x509 -nodes -key {$dir}certificate_authority.key -sha256 -days 825 -out {$dir}certificate_authority.pem -subj "{$subject}"
         COMMAND;
 
         $io->writeln($command, OutputInterface::VERBOSITY_VERBOSE);
 
         Helper::runCommand($command, $stdout, $stderr);
         Helper::log($io, $stdout, $stderr);
+
+        $io->info('success!');
 
         return 0;
     }
