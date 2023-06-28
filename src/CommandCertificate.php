@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Oct8pus\SelfSign;
 
 use Exception;
-use Oct8pus\SelfSign\Helper;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -95,10 +94,10 @@ class CommandCertificate extends Command
             COMMAND;
         } else {
             $command = <<<COMMAND
-            {$exe} req \
-            -new \
-            -key {$dir}private.key \
-            -out {$dir}request.csr \
+            {$exe} req \\
+            -new \\
+            -key {$dir}private.key \\
+            -out {$dir}request.csr \\
             -subj "{$subject}"
             COMMAND;
         }
@@ -110,7 +109,7 @@ class CommandCertificate extends Command
 
         $io->info('create certificate config file...');
 
-        $config = <<<DATA
+        $config = <<<'DATA'
         authorityKeyIdentifier=keyid,issuer
         basicConstraints=CA:FALSE
         keyUsage = digitalSignature, nonRepudiation, keyEncipherment, dataEncipherment
@@ -126,7 +125,7 @@ class CommandCertificate extends Command
         */
 
         foreach ($domains as $i => $domain) {
-            $i++;
+            ++$i;
             $config .= "DNS.{$i} = {$domain}\n";
         }
 
@@ -142,15 +141,15 @@ class CommandCertificate extends Command
             COMMAND;
         } else {
             $command = <<<COMMAND
-            {$exe} x509 \
-            -req \
-            -in {$dir}request.csr \
-            -CA {$authority}certificate_authority.pem \
-            -CAkey {$authority}certificate_authority.key \
-            -CAcreateserial \
-            -out {$dir}certificate.pem \
-            -days 825 \
-            -sha256 \
+            {$exe} x509 \\
+            -req \\
+            -in {$dir}request.csr \\
+            -CA {$authority}certificate_authority.pem \\
+            -CAkey {$authority}certificate_authority.key \\
+            -CAcreateserial \\
+            -out {$dir}certificate.pem \\
+            -days 825 \\
+            -sha256 \\
             -extfile {$dir}config.ext
             COMMAND;
         }

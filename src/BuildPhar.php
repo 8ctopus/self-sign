@@ -11,9 +11,9 @@ declare(strict_types=1);
 
 namespace Oct8pus\SelfSign;
 
-use Symfony\Component\Finder\Finder;
 use Phar;
 use SplFileInfo;
+use Symfony\Component\Finder\Finder;
 
 require __DIR__ . '/../vendor/autoload.php';
 

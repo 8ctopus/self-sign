@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Oct8pus\SelfSign;
 
 use Exception;
-use Oct8pus\SelfSign\Helper;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -65,7 +64,7 @@ class CommandAuthority extends Command
             throw new Exception("{$exe} not installed");
         }
 
-        $io->info("generate certificate authority private key...");
+        $io->info('generate certificate authority private key...');
 
         $command = "{$exe} genrsa -out {$dir}certificate_authority.key 2048";
 
