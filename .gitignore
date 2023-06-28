@@ -1,0 +1,6 @@
+# composer
+/vendor/
+
+# other
+/*.sublime-workspace
+/.php-cs-fixer.cache
