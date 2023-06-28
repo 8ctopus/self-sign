@@ -12,7 +12,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
-class CommandGenerate extends Command
+class CommandCertificate extends Command
 {
     /**
      * Configure command options
@@ -21,7 +21,8 @@ class CommandGenerate extends Command
      */
     protected function configure() : void
     {
-        $this->setName('generate')
+        $this
+            ->setName('generate')
             ->setDescription('Generate self-signed SSL certificate')
             ->addArgument('dir', InputArgument::REQUIRED)
             ->addArgument('domains', InputArgument::REQUIRED);

@@ -17,6 +17,7 @@ if (file_exists(__DIR__ . '/vendor/autoload.php')) {
 
 $app = new Application('self-sign', '0.1.0');
 
-$app->add(new CommandGenerate());
+$app->add(new CommandAuthority());
+$app->add(new CommandCertificate());
 
 $app->run();
