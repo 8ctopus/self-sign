@@ -22,7 +22,7 @@ class CommandCertificate extends Command
     protected function configure() : void
     {
         $this
-            ->setName('generate')
+            ->setName('certificate')
             ->setDescription('Generate self-signed SSL certificate')
             ->addArgument('directory', InputArgument::REQUIRED, 'Directory to save certificate')
             ->addArgument('domains', InputArgument::REQUIRED, 'Comma separated list of domains')
@@ -68,7 +68,7 @@ class CommandCertificate extends Command
             throw new Exception("{$exe} not installed");
         }
 
-        $io->info('generate domain private key');
+        $io->info('generate domain private key...');
 
         $command = "{$exe} genrsa -out {$dir}private.key 2048";
 
@@ -80,7 +80,7 @@ class CommandCertificate extends Command
         Helper::runCommand($command, $stdout, $stderr);
         Helper::log($io, $stdout, $stderr);
 
-        $io->info('create certificate signing request');
+        $io->info('create certificate signing request...');
 
         $subject = "/C=RU/L=Moscow/O=8ctopus/CN={$domains[0]}";
 
@@ -103,7 +103,7 @@ class CommandCertificate extends Command
         Helper::runCommand($command, $stdout, $stderr);
         Helper::log($io, $stdout, $stderr);
 
-        $io->info('create certificate config file');
+        $io->info('create certificate config file...');
 
         $config = <<<DATA
         authorityKeyIdentifier=keyid,issuer
@@ -129,7 +129,7 @@ class CommandCertificate extends Command
 
         $io->writeln($config, OutputInterface::VERBOSITY_VERBOSE);
 
-        $io->info('create signed certificate by certificate authority');
+        $io->info('create signed certificate by certificate authority...');
 
         if (Helper::isWindows()) {
             $command = <<<COMMAND
