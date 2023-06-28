@@ -33,24 +33,15 @@ class Helper
      */
     public static function runCommand(string $command, string &$stdout, string &$stderr) : void
     {
-        $descriptorSpec = [
-            // stdin
-            0 => ['pipe', 'r'],
-            // stdout
-            1 => ['pipe', 'w'],
-            // stderr
-            2 => ['pipe', 'w'], //["file", "/tmp/error-output.txt", "a"],
-        ];
-
-        $process = proc_open($command, $descriptorSpec, $pipes, null, null, null);
+        $process = proc_open($command, [
+            0 => ['pipe', 'r'], // stdin
+            1 => ['pipe', 'w'], // stdout
+            2 => ['pipe', 'w'], // stderr
+        ], $pipes, null);
 
         if (!is_resource($process)) {
             throw new Exception('open openssl process');
         }
-
-        // write input data
-        //fwrite($pipes[0], 'test');
-        fclose($pipes[0]);
 
         while (1) {
             $status = proc_get_status($process);
@@ -68,11 +59,12 @@ class Helper
         $stderr = stream_get_contents($pipes[2]);
         fclose($pipes[2]);
 
-        // it is important to close all pipes before calling proc_close in order to avoid a deadlock
-        $exitCode = proc_close($process);
+        /*$status = */ proc_close($process);
 
-        if ($exitCode !== 0) {
-            throw new Exception("process exit code {$exitCode}");
+        $status = $status['exitcode'];
+
+        if ($status !== 0) {
+            throw new Exception("command exit code - {$status}");
         }
     }
 
