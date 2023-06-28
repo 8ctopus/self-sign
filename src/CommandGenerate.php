@@ -71,24 +71,21 @@ class CommandGenerate extends Command
 
         $io->info('create certificate signing request');
 
-/*
+        $subject = "/C=RU/L=Moscow/O=8ctopus/CN={$domains[0]}";
+
         if (Helper::isWindows()) {
+            $command = <<<COMMAND
+            {$exe} req -new -key {$dir}\private.key -out {$dir}\request.csr -subj "{$subject}"
+            COMMAND;
+        } else {
             $command = <<<COMMAND
             {$exe} req \
             -new \
             -key {$dir}/private.key \
             -out {$dir}/request.csr \
-            -subj "//C=RU\\ST=Moscow\\L=Moscow\\O=8ctopus\\OU=8ctopus\\CN={$domains[0]}"
+            -subj "{$subject}"
             COMMAND;
-        } else {
-*/
-        $command = <<<COMMAND
-        {$exe} req \
-        -new \
-        -key {$dir}/private.key \
-        -out {$dir}/request.csr \
-        -subj "/C=RU/ST=Moscow/L=Moscow/O=8ctopus/OU=8ctopus/CN={$domains[0]}"
-        COMMAND;
+        }
 
         $io->writeln($command, OutputInterface::VERBOSITY_VERBOSE);
 
@@ -123,18 +120,24 @@ class CommandGenerate extends Command
 
         $io->info('create signed certificate by certificate authority');
 
-        $command = <<<COMMAND
-        {$exe} x509 \
-        -req \
-        -in {$dir}/request.csr \
-        -CA /sites/config/ssl/certificate_authority.pem \
-        -CAkey /sites/config/ssl/certificate_authority.key \
-        -CAcreateserial \
-        -out {$dir}/certificate.pem \
-        -days 825 \
-        -sha256 \
-        -extfile {$dir}/config.ext
-        COMMAND;
+        if (Helper::isWindows()) {
+            $command = <<<COMMAND
+            {$exe} x509 -req -in {$dir}\request.csr -CA {$dir}\certificate_authority.pem -CAkey {$dir}\certificate_authority.key -CAcreateserial -out {$dir}\certificate.pem -days 825 -sha256 -extfile {$dir}\config.ext
+            COMMAND;
+        } else {
+            $command = <<<COMMAND
+            {$exe} x509 \
+            -req \
+            -in {$dir}/request.csr \
+            -CA /sites/config/ssl/certificate_authority.pem \
+            -CAkey /sites/config/ssl/certificate_authority.key \
+            -CAcreateserial \
+            -out {$dir}/certificate.pem \
+            -days 825 \
+            -sha256 \
+            -extfile {$dir}/config.ext
+            COMMAND;
+        }
 
         $io->writeln($command, OutputInterface::VERBOSITY_VERBOSE);
 
