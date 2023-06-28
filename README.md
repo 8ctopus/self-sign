@@ -28,12 +28,10 @@ mv selfsign /usr/local/bin/
 
    selfsign generate domain.com,www.domain.com
 
+
 ## build phar
 
-    # not to include dev dependencies with phar
-    composer install --no-dev
-
-    php src/BuildPhar.php
+    ./build.sh
 
 ## debug code
 
