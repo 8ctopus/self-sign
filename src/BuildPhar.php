@@ -17,7 +17,7 @@ use SplFileInfo;
 
 require __DIR__ . '/../vendor/autoload.php';
 
-$filename = __DIR__ . '/../selfsign.phar';
+$filename = 'selfsign.phar';
 
 // clean up before creating a new phar
 if (file_exists($filename)) {
