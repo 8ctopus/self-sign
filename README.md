@@ -30,6 +30,9 @@ mv selfsign /usr/local/bin/
 
 ## build phar
 
+    # not to include dev dependencies with phar
+    composer install --no-dev
+
     php src/BuildPhar.php
 
 ## debug code
