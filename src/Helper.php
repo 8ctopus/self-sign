@@ -59,9 +59,9 @@ class Helper
         $stderr = stream_get_contents($pipes[2]);
         fclose($pipes[2]);
 
-        /*$status = */ proc_close($process);
+        $status = proc_close($process);
 
-        $status = $status['exitcode'];
+        //REM $status = $status['exitcode'];
 
         if ($status !== 0) {
             throw new Exception("command exit code - {$status}");
