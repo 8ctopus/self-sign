@@ -26,7 +26,9 @@ class CommandCertificate extends Command
             ->setDescription('Generate self-signed SSL certificate')
             ->addArgument('directory', InputArgument::REQUIRED, 'Directory to save certificate')
             ->addArgument('domains', InputArgument::REQUIRED, 'Comma separated list of domains')
-            ->addArgument('authority', InputArgument::REQUIRED, 'Certificate authority directory');
+            ->addArgument('authority', InputArgument::REQUIRED, 'Certificate authority directory')
+            ->addArgument('subject', InputArgument::OPTIONAL, 'Certificate subject')
+            ->addUsage('test test.com,www.test.com,api.test.com test');
     }
 
     /**
@@ -45,6 +47,7 @@ class CommandCertificate extends Command
         $dir = $input->getArgument('directory');
         $domains = explode(',', $input->getArgument('domains'));
         $authority = $input->getArgument('authority');
+        $subject = $input->getArgument('subject');
 
         $io->info("generate self-signed SSL certificate for {$domains[0]}...");
 
@@ -82,7 +85,9 @@ class CommandCertificate extends Command
 
         $io->info('create certificate signing request...');
 
-        $subject = "/C=RU/L=Moscow/O=8ctopus/CN={$domains[0]}";
+        if (empty($subject)) {
+            $subject = "/C=RU/L=Moscow/O=8ctopus/CN={$domains[0]}";
+        }
 
         if (Helper::isWindows()) {
             $command = <<<COMMAND

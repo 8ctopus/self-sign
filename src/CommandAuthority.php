@@ -25,7 +25,8 @@ class CommandAuthority extends Command
             ->setName('authority')
             ->setDescription('Generate certificate authority')
             ->addArgument('directory', InputArgument::REQUIRED, 'Directory to save certificate authority')
-            ->addArgument('subject', InputArgument::REQUIRED, 'Certificate authority subject');
+            ->addArgument('subject', InputArgument::OPTIONAL, 'Certificate authority subject')
+            ->addUsage('test /CN=RU/O=8ctopus');
     }
 
     /**
@@ -43,6 +44,10 @@ class CommandAuthority extends Command
 
         $dir = $input->getArgument('directory');
         $subject = $input->getArgument('subject');
+
+        if (empty($subject)) {
+            $subject = '/CN=RU/O=8ctopus';
+        }
 
         if (!file_exists($dir) && !mkdir($dir)) {
             throw new Exception('mkdir');
