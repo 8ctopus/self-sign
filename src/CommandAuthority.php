@@ -39,7 +39,7 @@ class CommandAuthority extends Command
     protected function execute(InputInterface $input, OutputInterface $output) : int
     {
         // beautify input, output interface
-        $io = new SymfonyStyle($input, $output);
+        $style = new SymfonyStyle($input, $output);
 
         $dir = $input->getArgument('destination');
         $subject = $input->getArgument('subject');
@@ -56,7 +56,7 @@ class CommandAuthority extends Command
             $dir .= \DIRECTORY_SEPARATOR;
         }
 
-        $io->writeln('check for openssl', OutputInterface::VERBOSITY_VERBOSE);
+        $style->writeln('check for openssl', OutputInterface::VERBOSITY_VERBOSE);
 
         $exe = 'openssl';
 
@@ -64,31 +64,31 @@ class CommandAuthority extends Command
             throw new Exception("{$exe} not installed");
         }
 
-        $io->info('generate certificate authority private key...');
+        $style->info('generate certificate authority private key...');
 
         $command = "{$exe} genrsa -out {$dir}certificate_authority.key 2048";
 
-        $io->writeln($command, OutputInterface::VERBOSITY_VERBOSE);
+        $style->writeln($command, OutputInterface::VERBOSITY_VERBOSE);
 
         $stdout = '';
         $stderr = '';
 
         Helper::runCommand($command, $stdout, $stderr);
-        Helper::log($io, $stdout, $stderr);
+        Helper::log($style, $stdout, $stderr);
 
-        $io->info('generate certificate authority certificate...');
+        $style->info('generate certificate authority certificate...');
 
         // to view certificate - openssl x509 -in certificate_authority.pem -noout -text
         $command = <<<COMMAND
         {$exe} req -new -x509 -nodes -key {$dir}certificate_authority.key -sha256 -days 825 -out {$dir}certificate_authority.pem -subj "{$subject}"
         COMMAND;
 
-        $io->writeln($command, OutputInterface::VERBOSITY_VERBOSE);
+        $style->writeln($command, OutputInterface::VERBOSITY_VERBOSE);
 
         Helper::runCommand($command, $stdout, $stderr);
-        Helper::log($io, $stdout, $stderr);
+        Helper::log($style, $stdout, $stderr);
 
-        $io->info('success!');
+        $style->info('success!');
 
         return 0;
     }

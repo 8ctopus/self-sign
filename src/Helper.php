@@ -93,14 +93,14 @@ class Helper
         }
     }
 
-    public static function log(SymfonyStyle $io, string $stdout, string $stderr) : void
+    public static function log(SymfonyStyle $style, string $stdout, string $stderr) : void
     {
         if (!empty($stdout)) {
-            $io->info($stdout);
+            $style->info($stdout);
         }
 
         if (!empty($stderr)) {
-            $io->error($stderr);
+            $style->error($stderr);
         }
     }
 

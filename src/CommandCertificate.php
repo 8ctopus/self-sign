@@ -41,14 +41,14 @@ class CommandCertificate extends Command
     protected function execute(InputInterface $input, OutputInterface $output) : int
     {
         // beautify input, output interface
-        $io = new SymfonyStyle($input, $output);
+        $style = new SymfonyStyle($input, $output);
 
         $dir = $input->getArgument('destination');
         $domains = explode(',', $input->getArgument('domains'));
         $authority = $input->getArgument('certificate_authority');
         $subject = $input->getArgument('subject');
 
-        $io->info("generate self-signed SSL certificate for {$domains[0]}...");
+        $style->info("generate self-signed SSL certificate for {$domains[0]}...");
 
         if (!str_ends_with($dir, \DIRECTORY_SEPARATOR)) {
             $dir .= \DIRECTORY_SEPARATOR;
@@ -62,7 +62,7 @@ class CommandCertificate extends Command
             throw new Exception('mkdir');
         }
 
-        $io->writeln('check for openssl', OutputInterface::VERBOSITY_VERBOSE);
+        $style->writeln('check for openssl', OutputInterface::VERBOSITY_VERBOSE);
 
         $exe = 'openssl';
 
@@ -70,19 +70,19 @@ class CommandCertificate extends Command
             throw new Exception("{$exe} not installed");
         }
 
-        $io->info('generate domain private key...');
+        $style->info('generate domain private key...');
 
         $command = "{$exe} genrsa -out {$dir}private.key 2048";
 
-        $io->writeln($command, OutputInterface::VERBOSITY_VERBOSE);
+        $style->writeln($command, OutputInterface::VERBOSITY_VERBOSE);
 
         $stdout = '';
         $stderr = '';
 
         Helper::runCommand($command, $stdout, $stderr);
-        Helper::log($io, $stdout, $stderr);
+        Helper::log($style, $stdout, $stderr);
 
-        $io->info('create certificate signing request...');
+        $style->info('create certificate signing request...');
 
         if (empty($subject)) {
             $subject = "/C=RU/L=Moscow/O=8ctopus/CN={$domains[0]}";
@@ -102,12 +102,12 @@ class CommandCertificate extends Command
             COMMAND;
         }
 
-        $io->writeln($command, OutputInterface::VERBOSITY_VERBOSE);
+        $style->writeln($command, OutputInterface::VERBOSITY_VERBOSE);
 
         Helper::runCommand($command, $stdout, $stderr);
-        Helper::log($io, $stdout, $stderr);
+        Helper::log($style, $stdout, $stderr);
 
-        $io->info('create certificate config file...');
+        $style->info('create certificate config file...');
 
         $config = <<<'DATA'
         authorityKeyIdentifier=keyid,issuer
@@ -131,9 +131,9 @@ class CommandCertificate extends Command
 
         file_put_contents("{$dir}config.ext", $config);
 
-        $io->writeln($config, OutputInterface::VERBOSITY_VERBOSE);
+        $style->writeln($config, OutputInterface::VERBOSITY_VERBOSE);
 
-        $io->info('create signed certificate by certificate authority...');
+        $style->info('create signed certificate by certificate authority...');
 
         if (Helper::isWindows()) {
             $command = <<<COMMAND
@@ -154,12 +154,12 @@ class CommandCertificate extends Command
             COMMAND;
         }
 
-        $io->writeln($command, OutputInterface::VERBOSITY_VERBOSE);
+        $style->writeln($command, OutputInterface::VERBOSITY_VERBOSE);
 
         Helper::runCommand($command, $stdout, $stderr);
-        Helper::log($io, $stdout, $stderr);
+        Helper::log($style, $stdout, $stderr);
 
-        $io->info('success!');
+        $style->info('success!');
 
         return 0;
     }
