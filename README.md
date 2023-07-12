@@ -8,6 +8,11 @@ It is notably used in my other project [apache php-fpm alpine](https://github.co
 
 ## how to install
 
+You have the choice between:
+- composer install `composer require 8ctopus/self-sign`
+- download the phar
+- or build it yourself
+
 ```sh
 # download selfsign
 curl -LO https://github.com/8ctopus/self-sign/raw/master/bin/selfsign.phar
