@@ -25,7 +25,7 @@ class CommandAuthority extends Command
             ->setDescription('Generate certificate authority')
             ->addArgument('destination', InputArgument::REQUIRED, 'Directory to save certificate authority')
             ->addArgument('subject', InputArgument::OPTIONAL, 'Certificate authority subject')
-            ->addUsage('test /CN=RU/O=8ctopus');
+            ->addUsage('test /C=RU/O=__For testing only');
     }
 
     /**
@@ -49,7 +49,7 @@ class CommandAuthority extends Command
         }
 
         if (!is_string($subject)) {
-            $subject = '/CN=RU/O=8ctopus';
+            $subject = '/C=RU/O=__For testing only';
         }
 
         if (!file_exists($dir) && !mkdir($dir)) {
