@@ -25,7 +25,7 @@ class Helper
     /**
      * Run command
      *
-     * @param string $command
+     * @param string       $command
      * @param SymfonyStyle $style
      *
      * @return void
@@ -74,7 +74,7 @@ class Helper
     /**
      * Run command alternate
      *
-     * @param string $command
+     * @param string       $command
      * @param SymfonyStyle $style
      *
      * @return void
