@@ -62,7 +62,7 @@ class Helper
 
         $status = proc_close($process);
 
-        self::log($style, $stdout, $stderr);
+        self::log($style, $stdout ?: '', $stderr ?: '');
 
         // REM $status = $status['exitcode'];
 

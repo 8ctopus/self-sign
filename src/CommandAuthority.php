@@ -44,6 +44,14 @@ class CommandAuthority extends Command
         $dir = $input->getArgument('destination');
         $subject = $input->getArgument('subject');
 
+        if (!is_string($dir)) {
+            throw new Exception('destination must be string');
+        }
+
+        if (!is_string($subject)) {
+            throw new Exception('subject must be string');
+        }
+
         if (empty($subject)) {
             $subject = '/CN=RU/O=8ctopus';
         }

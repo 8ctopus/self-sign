@@ -44,9 +44,27 @@ class CommandCertificate extends Command
         $style = new SymfonyStyle($input, $output);
 
         $dir = $input->getArgument('destination');
-        $domains = explode(',', $input->getArgument('domains'));
+        $domains = $input->getArgument('domains');
         $authority = $input->getArgument('certificate_authority');
         $subject = $input->getArgument('subject');
+
+        if (!is_string($dir)) {
+            throw new Exception('destination must be string');
+        }
+
+        if (!is_string($domains)) {
+            throw new Exception('domains must be string');
+        }
+
+        if (!is_string($authority)) {
+            throw new Exception('certificate authority must be string');
+        }
+
+        if (!is_string($subject)) {
+            throw new Exception('subject must be string');
+        }
+
+        $domains = explode(',', $domains);
 
         $style->info("generate self-signed SSL certificate for {$domains[0]}...");
 
