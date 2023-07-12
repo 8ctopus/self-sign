@@ -40,9 +40,10 @@ class Helper
         ], $pipes, null);
 
         if (!is_resource($process)) {
-            throw new Exception('open openssl process');
+            throw new Exception('open process');
         }
 
+        /*
         while (1) {
             $status = proc_get_status($process);
 
@@ -52,6 +53,7 @@ class Helper
 
             sleep(10);
         }
+        */
 
         $stdout = stream_get_contents($pipes[1]);
         fclose($pipes[1]);
@@ -61,10 +63,33 @@ class Helper
 
         $status = proc_close($process);
 
-        //REM $status = $status['exitcode'];
+        // REM $status = $status['exitcode'];
 
         if ($status !== 0) {
-            throw new Exception("command exit code - {$status}");
+            throw new Exception("command exit code - {$status} - {$command}");
+        }
+    }
+
+    /**
+     * Run command alternate
+     *
+     * @param  string $command
+     * @param  string &$stdout
+     * @param  string &$stderr
+     *
+     * @return void
+     */
+    public static function runCommandAlternate(string $command, string &$stdout, string &$stderr) : void
+    {
+        $stderr = '';
+
+        $result = exec($command, $output, $status);
+
+        $stdout = implode(PHP_EOL, $output);
+
+        // check command exit code
+        if ($result === false || $status !== 0) {
+            throw new Exception("command exit code - {$status} - {$command}");
         }
     }
 
