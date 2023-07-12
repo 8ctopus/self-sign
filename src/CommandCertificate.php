@@ -65,7 +65,7 @@ class CommandCertificate extends Command
         $domains = explode(',', $domains);
 
         if (!is_string($subject)) {
-            $subject = "/C=RU/L=Moscow/O=8ctopus/CN={$domains[0]}";
+            $subject = "/C=RU/O=__For testing only/CN={$domains[0]}";
         }
 
         if (!str_ends_with($dir, \DIRECTORY_SEPARATOR)) {
