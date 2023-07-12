@@ -4,7 +4,7 @@
         "vendor/"
     ],
     "main": "src/EntryPoint.php",
-    "output": "selfsign.phar",
+    "output": "bin/selfsign.phar",
     "compression": "GZ",
     "stub": true
 }

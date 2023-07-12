@@ -17,7 +17,7 @@ use Symfony\Component\Finder\Finder;
 
 require __DIR__ . '/../vendor/autoload.php';
 
-$filename = 'selfsign.phar';
+$filename = __DIR__ . '/bin/selfsign.phar';
 
 // clean up before creating a new phar
 if (file_exists($filename)) {
@@ -45,7 +45,7 @@ $finder->files()
     ->ignoreVCS(true)
     ->name('*.php')
     ->notName('BuildPhar.php')
-    ->in(__DIR__);
+    ->in(__DIR__ . '/src/');
 
 foreach ($finder as $file) {
     $phar->addFile($file->getRealPath(), getRelativeFilePath($file));
