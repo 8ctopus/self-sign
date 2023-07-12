@@ -24,6 +24,12 @@ if (file_exists($filename)) {
     unlink($filename);
 }
 
+$gzip = "{$filename}.gz";
+
+if (file_exists($gzip)) {
+    unlink($gzip);
+}
+
 // create phar
 $phar = new Phar($filename);
 
@@ -54,10 +60,15 @@ $finder->files()
     ->exclude('Tests')
     ->exclude('tests')
     ->exclude('docs')
+    ->exclude('LICENSE')
+    ->exclude('README.md')
+    ->exclude('CHANGELOG.md')
+    ->exclude('composer.json')
     ->in(__DIR__ . '/../vendor/');
 
 foreach ($finder as $file) {
     $phar->addFile($file->getRealPath(), getRelativeFilePath($file));
+    //$phar->addFromString(getRelativeFilePath($file), php_strip_whitespace(file_get_contents($file->getRealPath())));
 }
 
 $entrypoint = 'src/EntryPoint.php';
@@ -75,10 +86,19 @@ $phar->setStub($bootLoader);
 
 $phar->stopBuffering();
 
-// compress to gzip
-//$phar->compress(Phar::GZ);
+// compress to gzip - doesn't work, phar no longer executable
+//$phar->compress(Phar::GZ, '.phar.gz');
 
-echo 'Create phar - OK';
+//$phar->convertToExecutable(null, Phar::GZ, '.phar.gz');
+
+$sha256 = hash('sha256', file_get_contents($filename), false);
+
+echo <<<OUTPUT
+Create phar - OK
+{$filename} - {$sha256}
+
+OUTPUT;
+
 
 /**
  * Get file relative path
