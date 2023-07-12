@@ -38,7 +38,7 @@ mv selfsign /usr/local/bin/
 
 ### generate certificate authority
 
-    ./selfsign authority demo
+    ./selfsign authority destination-dir
 
     [INFO] generate certificate authority private key...
     [INFO] generate certificate authority certificate...
@@ -46,7 +46,7 @@ mv selfsign /usr/local/bin/
 
 ### generate certificate
 
-    ./selfsign certificate demo test.io,www.test.io,api.test.io demo
+    ./selfsign certificate destination-dir test.io,www.test.io,api.test.io authority-dir
 
     [INFO] generate self-signed SSL certificate for test.io...
     [INFO] generate domain private key...
