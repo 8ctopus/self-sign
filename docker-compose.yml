@@ -1,0 +1,11 @@
+version: '3.7'
+
+services:
+  web:
+    image: alpine
+    hostname: alpine
+    container_name: alpine
+    volumes:
+      # development directory
+      - .:/test/
+    command: tail -f /dev/null
