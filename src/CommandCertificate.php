@@ -50,12 +50,12 @@ class CommandCertificate extends Command
 
         $io->info("generate self-signed SSL certificate for {$domains[0]}...");
 
-        if (!str_ends_with($dir, DIRECTORY_SEPARATOR)) {
-            $dir .= DIRECTORY_SEPARATOR;
+        if (!str_ends_with($dir, \DIRECTORY_SEPARATOR)) {
+            $dir .= \DIRECTORY_SEPARATOR;
         }
 
-        if (!str_ends_with($authority, DIRECTORY_SEPARATOR)) {
-            $authority .= DIRECTORY_SEPARATOR;
+        if (!str_ends_with($authority, \DIRECTORY_SEPARATOR)) {
+            $authority .= \DIRECTORY_SEPARATOR;
         }
 
         if (!file_exists($dir) && !mkdir($dir)) {

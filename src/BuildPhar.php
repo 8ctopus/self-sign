@@ -90,7 +90,7 @@ echo 'Create phar - OK';
 function getRelativeFilePath(SplFileInfo $file) : string
 {
     $realPath = $file->getRealPath();
-    $pathPrefix = dirname(__DIR__) . DIRECTORY_SEPARATOR;
+    $pathPrefix = dirname(__DIR__) . \DIRECTORY_SEPARATOR;
 
     $pos = strpos($realPath, $pathPrefix);
     $relativePath = ($pos !== false) ? substr_replace($realPath, '', $pos, strlen($pathPrefix)) : $realPath;

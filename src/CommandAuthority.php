@@ -52,8 +52,8 @@ class CommandAuthority extends Command
             throw new Exception('mkdir');
         }
 
-        if (!str_ends_with($dir, DIRECTORY_SEPARATOR)) {
-            $dir .= DIRECTORY_SEPARATOR;
+        if (!str_ends_with($dir, \DIRECTORY_SEPARATOR)) {
+            $dir .= \DIRECTORY_SEPARATOR;
         }
 
         $io->writeln('check for openssl', OutputInterface::VERBOSITY_VERBOSE);

@@ -73,9 +73,9 @@ class Helper
     /**
      * Run command alternate
      *
-     * @param  string $command
-     * @param  string &$stdout
-     * @param  string &$stderr
+     * @param string $command
+     * @param string &$stdout
+     * @param string &$stderr
      *
      * @return void
      */
