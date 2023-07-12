@@ -1,0 +1,10 @@
+{
+    "directories": [
+        "src/",
+        "vendor/"
+    ],
+    "main": "src/EntryPoint.php",
+    "output": "example.phar",
+    "compression": "GZ",
+    "stub": true
+}
