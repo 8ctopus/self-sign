@@ -32,7 +32,7 @@ mv selfsign /usr/local/bin/
 
 ### generate certificate authority
 
-    ./selfsign authority ssl
+    ./selfsign authority demo
 
     [INFO] generate certificate authority private key...
     [INFO] generate certificate authority certificate...
@@ -40,7 +40,7 @@ mv selfsign /usr/local/bin/
 
 ### generate certificate
 
-    ./selfsign certificate ssl test.io,www.test.io,api.test.io ssl
+    ./selfsign certificate demo test.io,www.test.io,api.test.io demo
 
     [INFO] generate self-signed SSL certificate for test.io...
     [INFO] generate domain private key...
@@ -57,4 +57,4 @@ mv selfsign /usr/local/bin/
 
 ### debug code
 
-    php src/EntryPoint.php certificate --verbose ssl test.io,www.test.io,api.test.io ssl
+    php src/EntryPoint.php certificate --verbose demo test.io,www.test.io,api.test.io demo

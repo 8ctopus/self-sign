@@ -5,3 +5,4 @@
 /*.sublime-workspace
 /.php-cs-fixer.cache
 /*.phar
+/demo/*
