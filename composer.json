@@ -43,6 +43,6 @@
         "phpmd": "phpmd src ansi phpmd.xml"
     },
     "bin": [
-        "selfsign"
+        "bin/selfsign.phar"
     ]
 }
