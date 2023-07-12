@@ -33,7 +33,7 @@ if (file_exists($gzip)) {
 // create phar
 $phar = new Phar($filename);
 
-$phar->setSignatureAlgorithm(Phar::SHA1);
+$phar->setSignatureAlgorithm(Phar::SHA256);
 
 // start buffering, mandatory to modify stub
 $phar->startBuffering();
