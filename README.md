@@ -9,7 +9,7 @@ self-sign is a command line tool to create self-signed SSL certificates, mainly 
 
 ```sh
 # download selfsign
-curl -LO https://github.com/8ctopus/self-sign/releases/download/0.1.0/selfsign.phar
+curl -LO https://github.com/8ctopus/self-sign/raw/master/bin/selfsign.phar
 
 # check hash against the one published under releases
 sha256sum selfsign.phar
