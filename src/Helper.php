@@ -99,7 +99,7 @@ class Helper
             $io->info($stdout);
         }
 
-        if (!empty($error)) {
+        if (!empty($stderr)) {
             $io->error($stderr);
         }
     }
