@@ -13,13 +13,13 @@
     ],
     "require": {
         "php": "^8.2",
-        "symfony/console": "6.1.3",
-        "symfony/finder": "^6"
+        "symfony/console": "6.1.3"
     },
     "require-dev": {
         "friendsofphp/php-cs-fixer": "^3.8",
         "phpstan/phpstan": "^1.9",
-        "phpmd/phpmd": "^2.13"
+        "phpmd/phpmd": "^2.13",
+        "symfony/finder": "^6"
     },
     "replace": {
         "symfony/polyfill-php80": "*",
