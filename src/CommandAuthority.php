@@ -70,11 +70,7 @@ class CommandAuthority extends Command
 
         $style->writeln($command, OutputInterface::VERBOSITY_VERBOSE);
 
-        $stdout = '';
-        $stderr = '';
-
-        Helper::runCommand($command, $stdout, $stderr);
-        Helper::log($style, $stdout, $stderr);
+        Helper::runCommand($command, $style);
 
         $style->info('generate certificate authority certificate...');
 
@@ -85,8 +81,7 @@ class CommandAuthority extends Command
 
         $style->writeln($command, OutputInterface::VERBOSITY_VERBOSE);
 
-        Helper::runCommand($command, $stdout, $stderr);
-        Helper::log($style, $stdout, $stderr);
+        Helper::runCommand($command, $style);
 
         $style->info('success!');
 

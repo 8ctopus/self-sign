@@ -76,11 +76,7 @@ class CommandCertificate extends Command
 
         $style->writeln($command, OutputInterface::VERBOSITY_VERBOSE);
 
-        $stdout = '';
-        $stderr = '';
-
-        Helper::runCommand($command, $stdout, $stderr);
-        Helper::log($style, $stdout, $stderr);
+        Helper::runCommand($command, $style);
 
         $style->info('create certificate signing request...');
 
@@ -104,8 +100,7 @@ class CommandCertificate extends Command
 
         $style->writeln($command, OutputInterface::VERBOSITY_VERBOSE);
 
-        Helper::runCommand($command, $stdout, $stderr);
-        Helper::log($style, $stdout, $stderr);
+        Helper::runCommand($command, $style);
 
         $style->info('create certificate config file...');
 
@@ -156,8 +151,7 @@ class CommandCertificate extends Command
 
         $style->writeln($command, OutputInterface::VERBOSITY_VERBOSE);
 
-        Helper::runCommand($command, $stdout, $stderr);
-        Helper::log($style, $stdout, $stderr);
+        Helper::runCommand($command, $style);
 
         $style->info('success!');
 

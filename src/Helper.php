@@ -26,12 +26,11 @@ class Helper
      * Run command
      *
      * @param string $command
-     * @param string $stdout
-     * @param string $stderr
+     * @param SymfonyStyle $style
      *
      * @return void
      */
-    public static function runCommand(string $command, string &$stdout, string &$stderr) : void
+    public static function runCommand(string $command, SymfonyStyle $style) : void
     {
         $process = proc_open($command, [
             0 => ['pipe', 'r'], // stdin
@@ -63,6 +62,8 @@ class Helper
 
         $status = proc_close($process);
 
+        self::log($style, $stdout, $stderr);
+
         // REM $status = $status['exitcode'];
 
         if ($status !== 0) {
@@ -74,18 +75,17 @@ class Helper
      * Run command alternate
      *
      * @param string $command
-     * @param string &$stdout
-     * @param string &$stderr
+     * @param SymfonyStyle $style
      *
      * @return void
      */
-    public static function runCommandAlternate(string $command, string &$stdout, string &$stderr) : void
+    public static function runCommandAlternate(string $command, SymfonyStyle $style) : void
     {
-        $stderr = '';
-
         $result = exec($command, $output, $status);
 
         $stdout = implode(PHP_EOL, $output);
+
+        self::log($style, $stdout, '');
 
         // check command exit code
         if ($result === false || $status !== 0) {
