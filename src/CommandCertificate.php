@@ -23,9 +23,9 @@ class CommandCertificate extends Command
         $this
             ->setName('certificate')
             ->setDescription('Generate self-signed SSL certificate')
-            ->addArgument('directory', InputArgument::REQUIRED, 'Directory to save certificate')
+            ->addArgument('destination', InputArgument::REQUIRED, 'Directory to save certificate')
             ->addArgument('domains', InputArgument::REQUIRED, 'Comma separated list of domains')
-            ->addArgument('authority', InputArgument::REQUIRED, 'Certificate authority directory')
+            ->addArgument('certificate_authority', InputArgument::REQUIRED, 'Certificate authority directory')
             ->addArgument('subject', InputArgument::OPTIONAL, 'Certificate subject')
             ->addUsage('test test.com,www.test.com,api.test.com test');
     }
@@ -43,9 +43,9 @@ class CommandCertificate extends Command
         // beautify input, output interface
         $io = new SymfonyStyle($input, $output);
 
-        $dir = $input->getArgument('directory');
+        $dir = $input->getArgument('destination');
         $domains = explode(',', $input->getArgument('domains'));
-        $authority = $input->getArgument('authority');
+        $authority = $input->getArgument('certificate_authority');
         $subject = $input->getArgument('subject');
 
         $io->info("generate self-signed SSL certificate for {$domains[0]}...");

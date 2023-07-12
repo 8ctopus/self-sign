@@ -26,12 +26,35 @@ mv selfsign /usr/local/bin/
 
 ## how to use
 
-   selfsign generate domain.com,www.domain.com
+### help
 
-## build phar
+    ./selfsign --help
+
+### generate certificate authority
+
+    ./selfsign authority ssl
+
+    [INFO] generate certificate authority private key...
+    [INFO] generate certificate authority certificate...
+    [INFO] success!
+
+### generate certificate
+
+    ./selfsign certificate ssl test.io,www.test.io,api.test.io ssl
+
+    [INFO] generate self-signed SSL certificate for test.io...
+    [INFO] generate domain private key...
+    [INFO] create certificate signing request...
+    [INFO] create certificate config file...
+    [INFO] create signed certificate by certificate authority...
+    [INFO] success!
+
+## for development
+
+### build phar
 
     ./build.sh
 
-## debug code
+### debug code
 
-    php src/EntryPoint.php generate test test.com --verbose
+    php src/EntryPoint.php certificate --verbose ssl test.io,www.test.io,api.test.io ssl

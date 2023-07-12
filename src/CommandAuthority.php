@@ -23,7 +23,7 @@ class CommandAuthority extends Command
         $this
             ->setName('authority')
             ->setDescription('Generate certificate authority')
-            ->addArgument('directory', InputArgument::REQUIRED, 'Directory to save certificate authority')
+            ->addArgument('destination', InputArgument::REQUIRED, 'Directory to save certificate authority')
             ->addArgument('subject', InputArgument::OPTIONAL, 'Certificate authority subject')
             ->addUsage('test /CN=RU/O=8ctopus');
     }
@@ -41,7 +41,7 @@ class CommandAuthority extends Command
         // beautify input, output interface
         $io = new SymfonyStyle($input, $output);
 
-        $dir = $input->getArgument('directory');
+        $dir = $input->getArgument('destination');
         $subject = $input->getArgument('subject');
 
         if (empty($subject)) {
