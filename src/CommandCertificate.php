@@ -60,7 +60,7 @@ class CommandCertificate extends Command
             throw new Exception('certificate authority must be string');
         }
 
-        $style->info("generate self-signed SSL certificate for {$domains}...");
+        $style->writeln("generate self-signed SSL certificate for {$domains}...");
 
         $domains = explode(',', $domains);
 
@@ -88,7 +88,7 @@ class CommandCertificate extends Command
             throw new Exception("{$exe} not installed");
         }
 
-        $style->info('generate domain private key...');
+        $style->writeln('generate domain private key...');
 
         $command = "{$exe} genrsa -out {$dir}private.key 2048";
 
@@ -96,7 +96,7 @@ class CommandCertificate extends Command
 
         Helper::runCommand($command, $style);
 
-        $style->info('create certificate signing request...');
+        $style->writeln('create certificate signing request...');
 
         if (Helper::isWindows()) {
             $command = <<<COMMAND
@@ -116,7 +116,7 @@ class CommandCertificate extends Command
 
         Helper::runCommand($command, $style);
 
-        $style->info('create certificate config file...');
+        $style->writeln('create certificate config file...');
 
         $config = <<<'DATA'
         authorityKeyIdentifier=keyid,issuer
@@ -142,7 +142,7 @@ class CommandCertificate extends Command
 
         $style->writeln($config, OutputInterface::VERBOSITY_VERBOSE);
 
-        $style->info('create signed certificate by certificate authority...');
+        $style->writeln('create signed certificate by certificate authority...');
 
         if (Helper::isWindows()) {
             $command = <<<COMMAND

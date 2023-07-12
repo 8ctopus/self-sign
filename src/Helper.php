@@ -97,7 +97,7 @@ class Helper
     public static function log(SymfonyStyle $style, string $stdout, string $stderr) : void
     {
         if (!empty($stdout)) {
-            $style->info($stdout);
+            $style->writeln($stdout);
         }
 
         if (!empty($stderr)) {

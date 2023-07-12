@@ -68,7 +68,7 @@ class CommandAuthority extends Command
             throw new Exception("{$exe} not installed");
         }
 
-        $style->info('generate certificate authority private key...');
+        $style->writeln('generate certificate authority private key...');
 
         $command = "{$exe} genrsa -out {$dir}certificate_authority.key 2048";
 
@@ -76,7 +76,7 @@ class CommandAuthority extends Command
 
         Helper::runCommand($command, $style);
 
-        $style->info('generate certificate authority certificate...');
+        $style->writeln('generate certificate authority certificate...');
 
         // to view certificate - openssl x509 -in certificate_authority.pem -noout -text
         $command = <<<COMMAND
