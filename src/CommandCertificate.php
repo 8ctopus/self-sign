@@ -60,13 +60,13 @@ class CommandCertificate extends Command
             throw new Exception('certificate authority must be string');
         }
 
-        if (!is_string($subject)) {
-            throw new Exception('subject must be string');
-        }
+        $style->info("generate self-signed SSL certificate for {$domains}...");
 
         $domains = explode(',', $domains);
 
-        $style->info("generate self-signed SSL certificate for {$domains[0]}...");
+        if (!is_string($subject)) {
+            $subject = "/C=RU/L=Moscow/O=8ctopus/CN={$domains[0]}";
+        }
 
         if (!str_ends_with($dir, \DIRECTORY_SEPARATOR)) {
             $dir .= \DIRECTORY_SEPARATOR;
@@ -97,10 +97,6 @@ class CommandCertificate extends Command
         Helper::runCommand($command, $style);
 
         $style->info('create certificate signing request...');
-
-        if (empty($subject)) {
-            $subject = "/C=RU/L=Moscow/O=8ctopus/CN={$domains[0]}";
-        }
 
         if (Helper::isWindows()) {
             $command = <<<COMMAND

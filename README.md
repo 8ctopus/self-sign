@@ -57,4 +57,5 @@ mv selfsign /usr/local/bin/
 
 ### debug code
 
-    php src/EntryPoint.php certificate --verbose demo test.io,www.test.io,api.test.io demo
+    php src/EntryPoint.php authority demo
+    php src/EntryPoint.php certificate demo test.io,www.test.io,api.test.io demo

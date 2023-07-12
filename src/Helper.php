@@ -62,13 +62,14 @@ class Helper
 
         $status = proc_close($process);
 
-        self::log($style, $stdout ?: '', $stderr ?: '');
-
         // REM $status = $status['exitcode'];
 
         if ($status !== 0) {
+            self::log($style, '', ($stdout ?: '') . PHP_EOL . ($stderr ?: ''));
             throw new Exception("command exit code - {$status} - {$command}");
         }
+
+        self::log($style, ($stdout ?: '') . PHP_EOL . ($stderr ?: ''), '');
     }
 
     /**

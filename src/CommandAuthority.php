@@ -49,10 +49,6 @@ class CommandAuthority extends Command
         }
 
         if (!is_string($subject)) {
-            throw new Exception('subject must be string');
-        }
-
-        if (empty($subject)) {
             $subject = '/CN=RU/O=8ctopus';
         }
 
