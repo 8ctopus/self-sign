@@ -3,7 +3,7 @@
 [![license](http://poser.pugx.org/8ctopus/self-sign/license)](https://packagist.org/packages/8ctopus/self-sign)
 ![lines of code](https://raw.githubusercontent.com/8ctopus/self-sign/image-data/lines.svg)
 
-self-sign is a command line tool to create self-signed SSL certificates
+self-sign is a command line tool to create self-signed SSL certificates, mainly for local testing.
 
 ## how to install
 
@@ -27,7 +27,6 @@ mv selfsign /usr/local/bin/
 ## how to use
 
    selfsign generate domain.com,www.domain.com
-
 
 ## build phar
 
