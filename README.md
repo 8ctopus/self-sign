@@ -46,9 +46,9 @@ mv selfsign /usr/local/bin/
 
 ### generate certificate
 
-    selfsign certificate destination-dir test.io,www.test.io,api.test.io authority-dir
+    selfsign certificate destination-dir test.com,www.test.com,api.test.com authority-dir
 
-    [INFO] generate self-signed SSL certificate for test.io...
+    [INFO] generate self-signed SSL certificate for test.com...
     [INFO] generate domain private key...
     [INFO] create certificate signing request...
     [INFO] create certificate config file...
@@ -64,4 +64,4 @@ mv selfsign /usr/local/bin/
 ### debug code
 
     php src/EntryPoint.php authority demo
-    php src/EntryPoint.php certificate demo test.io,www.test.io,api.test.io demo
+    php src/EntryPoint.php certificate demo test.com,www.test.com,api.test.com demo
