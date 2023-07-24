@@ -15,7 +15,7 @@ if (file_exists(__DIR__ . '/vendor/autoload.php')) {
     throw new Exception('autoload not found');
 }
 
-$app = new Application('self-sign', '0.1.7');
+$app = new Application('self-sign', '0.1.8');
 
 $app->add(new CommandAuthority());
 $app->add(new CommandCertificate());

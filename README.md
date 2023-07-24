@@ -15,7 +15,7 @@ You have the choice between:
 
 ```sh
 # download selfsign
-curl -LO https://github.com/8ctopus/self-sign/releases/download/0.1.7/selfsign.phar
+curl -LO https://github.com/8ctopus/self-sign/releases/download/0.1.8/selfsign.phar
 
 # check hash against the one published under releases
 sha256sum selfsign.phar
