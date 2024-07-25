@@ -1,6 +1,6 @@
 # selfsign
 
-[![license](http://poser.pugx.org/8ctopus/self-sign/license)](https://packagist.org/packages/8ctopus/self-sign)
+[![license](https://poser.pugx.org/8ctopus/self-sign/license)](https://packagist.org/packages/8ctopus/self-sign)
 ![lines of code](https://raw.githubusercontent.com/8ctopus/self-sign/image-data/lines.svg)
 
 `selfsign` is a command line tool to create self-signed SSL certificates, mainly for local testing.
